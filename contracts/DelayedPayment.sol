@@ -32,7 +32,7 @@ contract DelayedPayment {
             0,           // the amount of ether (in wei) that will be sent with the txn
             lockedUntil  // the first block number on which the transaction can be executed.
         ];
-        scheduler.scheduleTransaction(
+        scheduler.scheduleTransaction.value(2 ether)(
             address(this),  // The address that the transaction will be sent to.
             "",             // The call data that will be sent with the transaction.
             255,            // The number of blocks this will be executable.
@@ -47,8 +47,8 @@ contract DelayedPayment {
     }
 
     function payout() public returns (bool) {
-        require(lockedUntil < now);
+        if (now < lockedUntil) return false;
 
-        recipient.transfer(this.balance);
+        return recipient.call.value(this.balance)();
     }
 }

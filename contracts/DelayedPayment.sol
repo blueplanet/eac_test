@@ -1,5 +1,3 @@
-pragma solidity ^0.4.17;
-
 contract SchedulerInterface {
     //
     // params:
@@ -22,7 +20,7 @@ contract DelayedPayment {
     uint lockedUntil;
     address recipient;
 
-    function DelayedPayment(address _recipient, uint numBlocks) public {
+    function DelayedPayment(address _recipient, uint numBlocks) {
         // set the time that the funds are locked up
         lockedUntil = block.number + numBlocks;
         recipient = _recipient;
@@ -36,11 +34,11 @@ contract DelayedPayment {
             address(this),  // The address that the transaction will be sent to.
             "",             // The call data that will be sent with the transaction.
             255,            // The number of blocks this will be executable.
-            uintArgs        // The tree args defined above
+            uintArgs       // The tree args defined above
         );
     }
 
-    function() public {
+    function() {
         if (this.balance > 0) {
             payout();
         }

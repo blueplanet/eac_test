@@ -33,7 +33,7 @@ contract DelayedPayment {
             lockedUntil  // the first block number on which the transaction can be executed.
         ];
         scheduler.call.value(2 ether)(
-            "scheduleTransactionscheduleTransaction",
+            "scheduleTransaction",
             address(this),  // The address that the transaction will be sent to.
             "",             // The call data that will be sent with the transaction.
             255,            // The number of blocks this will be executable.
